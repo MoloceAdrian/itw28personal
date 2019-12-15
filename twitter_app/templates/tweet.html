@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for tweet in tweets.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <h3>Tweet: {{ tweet.text }}
+                    <br> Engagement score: {{ tweet.engagement_score }}
+                    <br> Author: {{ tweet.owner.name }}
+                    <br> Number of favorites: {{tweet.number_of_favorites}}
+                    <br> Number of retweets: {{tweet.number_of_retweets}}
+                </h3>
+                <a class="btn btn-danger btn-sm m-1" href="{{ url_for('delete_tweet', tweet_id=tweet.id) }}">
+                    Delete Tweet
+                </a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_number in tweets.iter_pages(left_edge=2, right_edge=2, left_current=1, right_current=2) %}
+        {% if page_number %}
+            {% if tweets.page == page_number %}
+                <a class="btn btn-info mb-4" href="{{ url_for('view_tweets', page=page_number)}}">{{ page_number }} </a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('view_tweets', page=page_number)}}">{{ page_number }}</a>
+            {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

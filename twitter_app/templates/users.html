@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Screen_name</th>
+                <th>Number of Followers</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% for user in users %}
+            <tbody>
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.screen_name }}</td>
+                    <td> {{ user.number_of_followers }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm m-1" href="{{ url_for('view_user_tweets', user_id=user.id) }}"> View Tweets</a>
+                    </td>
+                </tr>
+            </tbody>
+    {% endfor %}
+    </table>
+{% endblock content %}
